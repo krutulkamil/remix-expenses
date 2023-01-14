@@ -1,6 +1,6 @@
-const PricingPage = () => {
+const PricingPage = (): JSX.Element => {
     return (
-        <div>test</div>
+        <h1>Pricing Page</h1>
     );
 };
 

@@ -5,21 +5,21 @@ import {
     Meta,
     Outlet,
     Scripts,
-    ScrollRestoration,
+    ScrollRestoration
 } from "@remix-run/react";
 import styles from "./styles/main.css";
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
-    title: "New Remix App",
-    viewport: "width=device-width,initial-scale=1",
+    title: "Remix Expenses",
+    viewport: "width=device-width,initial-scale=1"
 });
 
 export const links: LinksFunction = () => {
     return [{ rel: "stylesheet", href: styles }];
 };
 
-export default function App() {
+const App = () => {
     return (
         <html lang="en">
         <head>
@@ -34,4 +34,6 @@ export default function App() {
         </body>
         </html>
     );
-}
+};
+
+export default App;
