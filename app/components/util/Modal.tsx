@@ -2,7 +2,7 @@ import type { FunctionComponent, ReactNode } from "react";
 
 interface ModalProps {
     children: ReactNode;
-    onClose: () => {};
+    onClose: () => void;
 }
 
 const Modal: FunctionComponent<ModalProps> = ({ children, onClose }): JSX.Element => {

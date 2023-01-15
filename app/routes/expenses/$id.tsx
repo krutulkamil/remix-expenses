@@ -1,10 +1,13 @@
 import ExpenseForm from "~/components/expenses/ExpenseForm";
+import Modal from "~/components/util/Modal";
 import type { MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 
 const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
     return (
-        <ExpenseForm />
+        <Modal onClose={() => {}}>
+            <ExpenseForm />
+        </Modal>
     );
 };
 
