@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 
 const ExpenseForm: FunctionComponent = (): JSX.Element => {
@@ -9,7 +10,6 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
                 <label htmlFor="title">Expense Title</label>
                 <input type="text" id="title" name="title" required maxLength={30} />
             </p>
-
             <div className="form-row">
                 <p>
                     <label htmlFor="amount">Amount</label>
@@ -29,7 +29,7 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
             </div>
             <div className="form-actions">
                 <button>Save Expense</button>
-                <a href="tbd">Cancel</a>
+                <Link to="..">Cancel</Link>
             </div>
         </form>
     );

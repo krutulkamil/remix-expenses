@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 import type { IExpense } from "~/types/expense";
 
@@ -18,7 +19,7 @@ const ExpenseListItem: FunctionComponent<ExpenseListItemProps> = ({ id, title, a
             </div>
             <menu className="expense-actions">
                 <button onClick={deleteExpenseItemHandler}>Delete</button>
-                <a href="tbd">Edit</a>
+                <Link to={id}>Edit</Link>
             </menu>
         </article>
     );

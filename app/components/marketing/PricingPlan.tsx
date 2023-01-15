@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 import type { IPricingPlan } from "~/types/pricingPlan";
 
@@ -19,7 +20,7 @@ const PricingPlan: FunctionComponent<IPricingPlan> = ({ title, price, perks, ico
                     ))}
                 </ol>
                 <div className="actions">
-                    <a href="/not-implemented">Learn More</a>
+                    <Link to="/not-implemented">Learn More</Link>
                 </div>
             </div>
         </article>
