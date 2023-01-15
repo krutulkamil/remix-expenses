@@ -1,6 +1,6 @@
 import { Outlet } from "@remix-run/react";
 import ExpenseList from "~/components/expenses/ExpenseList";
-import { DUMMY_EXPENSES } from "~/routes/expenses.analysis";
+import { DUMMY_EXPENSES } from "~/routes/__app/expenses.analysis";
 import type { MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 
