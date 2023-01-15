@@ -1,7 +1,8 @@
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import type { MetaFunction } from "@remix-run/node";
+import type { FunctionComponent } from "react";
 
-const UpdateExpensesPage = (): JSX.Element => {
+const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
     return (
         <ExpenseForm />
     );

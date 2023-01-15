@@ -2,6 +2,7 @@ import ExpenseStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
 import type { IExpense } from "~/types/expense";
 import type { MetaFunction } from "@remix-run/node";
+import type { FunctionComponent } from "react";
 
 export const DUMMY_EXPENSES: IExpense[] = [
     {
@@ -24,7 +25,7 @@ export const DUMMY_EXPENSES: IExpense[] = [
     }
 ];
 
-const ExpensesAnalysisPage = (): JSX.Element => {
+const ExpensesAnalysisPage: FunctionComponent = (): JSX.Element => {
     return (
         <main>
             <Chart expenses={DUMMY_EXPENSES} />

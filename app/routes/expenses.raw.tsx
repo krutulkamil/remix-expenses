@@ -1,6 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
+import type { FunctionComponent } from "react";
 
-const RawExpensesPage = (): JSX.Element => {
+const RawExpensesPage: FunctionComponent = (): JSX.Element => {
     return (
         <h1>Raw Expenses Page</h1>
     );

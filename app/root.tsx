@@ -8,6 +8,7 @@ import {
     ScrollRestoration
 } from "@remix-run/react";
 import styles from "./styles/main.css";
+import type { FunctionComponent } from "react";
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
@@ -19,7 +20,7 @@ export const links: LinksFunction = () => {
     return [{ rel: "stylesheet", href: styles }];
 };
 
-const App = () => {
+const App: FunctionComponent = (): JSX.Element => {
     return (
         <html lang="en">
         <head>

@@ -1,7 +1,8 @@
 import AuthForm from "~/components/auth/AuthForm";
-import { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
+import type { FunctionComponent } from "react";
 
-const AuthPage = (): JSX.Element => {
+const AuthPage: FunctionComponent = (): JSX.Element => {
     return (
         <AuthForm />
     );

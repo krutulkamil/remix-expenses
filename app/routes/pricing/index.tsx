@@ -2,6 +2,7 @@ import PricingPlan from "~/components/marketing/PricingPlan";
 import { FaTrophy, FaHandshake } from "react-icons/fa";
 import type { IPricingPlan } from "~/types/pricingPlan";
 import type { MetaFunction } from "@remix-run/node";
+import type { FunctionComponent } from "react";
 
 export const PRICING_PLANS: IPricingPlan[] = [
     {
@@ -20,7 +21,7 @@ export const PRICING_PLANS: IPricingPlan[] = [
     }
 ];
 
-const PricingPage = (): JSX.Element => {
+const PricingPage: FunctionComponent = (): JSX.Element => {
     return (
         <main id="pricing">
             <h2>Great Product, Simple Pricing</h2>
