@@ -29,7 +29,7 @@ const Chart: FunctionComponent<ChartProps> = ({ expenses }): JSX.Element => {
 
     for (const expense of expenses) {
         const expenseMonth = new Date(expense.date).getMonth();
-        chartDataPoints[expenseMonth].value += expense.month;
+        chartDataPoints[expenseMonth].value += expense.amount;
     }
 
     const dataPointValues: number[] = chartDataPoints.map((dataPoint: ChartData) => dataPoint.value);

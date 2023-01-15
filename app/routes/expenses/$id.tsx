@@ -1,6 +1,8 @@
+import ExpenseForm from "~/components/expenses/ExpenseForm";
+
 const UpdateExpensesPage = (): JSX.Element => {
     return (
-        <h1>Update Expenses Page</h1>
+        <ExpenseForm />
     );
 };
 

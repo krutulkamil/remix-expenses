@@ -1,6 +1,8 @@
+import AuthForm from "~/components/auth/AuthForm";
+
 const AuthPage = (): JSX.Element => {
     return (
-        <h1>Auth Page</h1>
+        <AuthForm />
     );
 };
 
