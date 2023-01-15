@@ -1,8 +1,14 @@
 import { Outlet } from "@remix-run/react";
+import MainHeader from "~/components/navigation/MainHeader";
 import type { FunctionComponent } from "react";
 
 const MarketingLayout: FunctionComponent = (): JSX.Element => {
-    return <Outlet />;
+    return (
+        <>
+            <MainHeader />
+            <Outlet />
+        </>
+    );
 };
 
 export default MarketingLayout;
