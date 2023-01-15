@@ -1,9 +1,9 @@
 import ChartBar from "./ChartBar";
 import type { FunctionComponent } from "react";
-import type { Expense } from "~/types/expense";
+import type { IExpense } from "~/types/expense";
 
 interface ChartProps {
-    expenses: Expense[];
+    expenses: IExpense[];
 }
 
 export interface ChartData {

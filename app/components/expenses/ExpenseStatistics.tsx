@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { calculateSummaryStatistics } from "~/services/calculateSummaryStatistics";
 import type { FunctionComponent } from "react";
-import type { Expense } from "~/types/expense";
+import type { IExpense } from "~/types/expense";
 
 interface ExpenseStatisticsProps {
-    expenses: Expense[];
+    expenses: IExpense[];
 }
 
 const ExpenseStatistics: FunctionComponent<ExpenseStatisticsProps> = ({ expenses }): JSX.Element => {

@@ -1,6 +1,6 @@
-import type { Expense } from "~/components/expenses/ExpenseList";
+import type { IExpense } from "~/types/expense";
 
-export const calculateSummaryStatistics = (expenses: Expense[]) => {
+export const calculateSummaryStatistics = (expenses: IExpense[]) => {
     const amounts: number[] = expenses.map((expense) => +expense.amount);
     const maxAmount: number = Math.max(...amounts);
     const minAmount: number = Math.min(...amounts);

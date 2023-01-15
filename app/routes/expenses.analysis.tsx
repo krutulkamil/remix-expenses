@@ -1,8 +1,9 @@
 import ExpenseStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
-import type { Expense } from "~/types/expense";
+import type { IExpense } from "~/types/expense";
+import type { MetaFunction } from "@remix-run/node";
 
-export const DUMMY_EXPENSES: Expense[] = [
+export const DUMMY_EXPENSES: IExpense[] = [
     {
         id: "e1",
         title: "example expense",
@@ -31,5 +32,11 @@ const ExpensesAnalysisPage = (): JSX.Element => {
         </main>
     );
 };
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    title: "Analysis | Remix Expenses",
+    viewport: "width=device-width,initial-scale=1"
+});
 
 export default ExpensesAnalysisPage;

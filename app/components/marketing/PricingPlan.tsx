@@ -1,13 +1,7 @@
 import type { FunctionComponent } from "react";
+import type { IPricingPlan } from "~/types/pricingPlan";
 
-interface PricingPlanProps {
-    title: string;
-    price: number;
-    perks: string[];
-    icon: FunctionComponent;
-}
-
-const PricingPlan: FunctionComponent<PricingPlanProps> = ({ title, price, perks, icon }): JSX.Element => {
+const PricingPlan: FunctionComponent<IPricingPlan> = ({ title, price, perks, icon }): JSX.Element => {
     const Icon = icon;
     return (
         <article>
@@ -31,3 +25,5 @@ const PricingPlan: FunctionComponent<PricingPlanProps> = ({ title, price, perks,
         </article>
     );
 };
+
+export default PricingPlan;

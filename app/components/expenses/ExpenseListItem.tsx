@@ -1,10 +1,10 @@
 import type { FunctionComponent } from "react";
-import type { Expense } from "~/types/expense";
+import type { IExpense } from "~/types/expense";
 
 interface ExpenseListItemProps {
-    id: Expense["id"];
-    title: Expense["title"];
-    amount: Expense["amount"];
+    id: IExpense["id"];
+    title: IExpense["title"];
+    amount: IExpense["amount"];
 }
 
 const ExpenseListItem: FunctionComponent<ExpenseListItemProps> = ({ id, title, amount }): JSX.Element => {
