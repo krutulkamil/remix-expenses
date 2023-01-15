@@ -7,6 +7,7 @@ import {
     Scripts,
     ScrollRestoration
 } from "@remix-run/react";
+import MainHeader from "~/components/navigation/MainHeader";
 import styles from "./styles/main.css";
 import type { FunctionComponent } from "react";
 
@@ -32,6 +33,7 @@ const App: FunctionComponent = (): JSX.Element => {
             <Links />
         </head>
         <body>
+        <MainHeader />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
