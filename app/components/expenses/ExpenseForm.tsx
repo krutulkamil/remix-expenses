@@ -9,6 +9,7 @@ import {
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
 import type { RouteMatch, Params } from "@remix-run/react";
+import type { Navigation } from "@remix-run/router";
 import type { IExpenseValidationError } from "~/types/expense";
 
 const ExpenseForm: FunctionComponent = (): JSX.Element => {
@@ -20,7 +21,7 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
     const expenses: IExpense[] = matches.find(match => match.id === "routes/__app/expenses")!.data;
     const expenseData = expenses.find((expense: IExpense) => expense.id === params.id);
 
-    const navigation = useNavigation();
+    const navigation: Navigation = useNavigation();
     const validationErrors: IExpenseValidationError | undefined = useActionData();
 
     const defaultValues = expenseData ? {
@@ -75,7 +76,7 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
             </div>
             {validationErrors && (
                 <ul>
-                    {Object.values(validationErrors).map(error => <li key={error}>{error}</li>)}
+                    {Object.values(validationErrors).map((error: string) => <li key={error}>{error}</li>)}
                 </ul>
             )}
             <div className="form-actions">

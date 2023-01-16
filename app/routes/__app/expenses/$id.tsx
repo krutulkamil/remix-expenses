@@ -1,14 +1,19 @@
 import { useNavigate } from "@remix-run/react";
+import { redirect } from "@remix-run/node";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
-import type { MetaFunction } from "@remix-run/node";
+import { updateExpense } from "~/data/expenses.server";
+import { validateExpenseInput } from "~/data/validation.server";
+import type { Expense as IExpense } from "@prisma/client";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
+import type { IExpenseValidationError } from "~/types/expense";
 
 const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();
 
     const closeHandler = () => {
-        navigate('..')
+        navigate("..");
     };
 
     return (
@@ -16,6 +21,21 @@ const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
             <ExpenseForm />
         </Modal>
     );
+};
+
+export const action: ActionFunction = async ({ params, request }): Promise<Response | IExpenseValidationError> => {
+    const expenseId: string = params.id!;
+    const formData: FormData = await request.formData();
+    const expenseData = Object.fromEntries(formData) as unknown as IExpense;
+
+    try {
+        validateExpenseInput(expenseData);
+    } catch (error) {
+        return error as IExpenseValidationError;
+    }
+
+    await updateExpense(expenseId, expenseData);
+    return redirect("/expenses");
 };
 
 export const meta: MetaFunction = () => ({

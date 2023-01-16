@@ -33,3 +33,19 @@ export const getExpense = async (id: string): Promise<PrismaPromise<IExpense | n
         throw error;
     }
 };
+
+export const updateExpense = async (id: string, expenseData: IExpense): Promise<PrismaPromise<IExpense>> => {
+    try {
+        return await prisma.expense.update({
+            where: { id },
+            data: {
+                title: expenseData.title,
+                amount: +expenseData.amount,
+                date: new Date(expenseData.date)
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
