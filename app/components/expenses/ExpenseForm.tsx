@@ -1,13 +1,16 @@
-import { Link, useActionData } from "@remix-run/react";
+import { Link, Form, useActionData, useNavigation } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 import type { IExpenseValidationError } from "~/types/expense";
 
 const ExpenseForm: FunctionComponent = (): JSX.Element => {
     const today: string = new Date().toISOString().slice(0, 10);
     const validationErrors: IExpenseValidationError | undefined = useActionData();
+    const navigation = useNavigation();
+
+    const isSubmitting: boolean = navigation.state !== 'idle';
 
     return (
-        <form method="post" className="form" id="expense-form">
+        <Form method="post" className="form" id="expense-form">
             <p>
                 <label htmlFor="title">Expense Title</label>
                 <input type="text" id="title" name="title" required maxLength={30} />
@@ -35,10 +38,10 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
                 </ul>
             )}
             <div className="form-actions">
-                <button>Save Expense</button>
+                <button disabled={isSubmitting}>{isSubmitting ? "Saving..." : "Save Expense"}</button>
                 <Link to="..">Cancel</Link>
             </div>
-        </form>
+        </Form>
     );
 };
 
