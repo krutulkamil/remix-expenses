@@ -1,14 +1,27 @@
-import { Link, Form, useActionData, useNavigation, useLoaderData } from "@remix-run/react";
-import type { loader } from "~/routes/__app/expenses/$id";
+import {
+    Link,
+    Form,
+    useActionData,
+    useNavigation,
+    useMatches,
+    useParams
+} from "@remix-run/react";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
+import type { RouteMatch, Params } from "@remix-run/react";
 import type { IExpenseValidationError } from "~/types/expense";
 
 const ExpenseForm: FunctionComponent = (): JSX.Element => {
     const today: string = new Date().toISOString().slice(0, 10);
-    const validationErrors: IExpenseValidationError | undefined = useActionData();
-    const expenseData: IExpense = useLoaderData<typeof loader>();
+
+    const matches: RouteMatch[] = useMatches();
+    const params: Params = useParams();
+
+    const expenses: IExpense[] = matches.find(match => match.id === "routes/__app/expenses")!.data;
+    const expenseData = expenses.find((expense: IExpense) => expense.id === params.id);
+
     const navigation = useNavigation();
+    const validationErrors: IExpenseValidationError | undefined = useActionData();
 
     const defaultValues = expenseData ? {
         title: expenseData.title,
@@ -56,7 +69,7 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
                         name="date"
                         max={today}
                         required
-                        defaultValue={defaultValues.date ? String(defaultValues.date).slice(0, 10) : ''}
+                        defaultValue={defaultValues.date ? String(defaultValues.date).slice(0, 10) : ""}
                     />
                 </p>
             </div>
