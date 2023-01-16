@@ -4,3 +4,9 @@ export interface IExpense {
     amount: number;
     date: string;
 }
+
+export interface IExpenseValidationError {
+    title?: string;
+    amount?: string;
+    date?: string;
+}

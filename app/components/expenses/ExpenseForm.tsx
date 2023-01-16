@@ -1,8 +1,10 @@
-import { Link } from "@remix-run/react";
+import { Link, useActionData } from "@remix-run/react";
 import type { FunctionComponent } from "react";
+import type { IExpenseValidationError } from "~/types/expense";
 
 const ExpenseForm: FunctionComponent = (): JSX.Element => {
     const today: string = new Date().toISOString().slice(0, 10);
+    const validationErrors: IExpenseValidationError | undefined = useActionData();
 
     return (
         <form method="post" className="form" id="expense-form">
@@ -27,6 +29,11 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
                     <input type="date" id="date" name="date" max={today} required />
                 </p>
             </div>
+            {validationErrors && (
+                <ul>
+                    {Object.values(validationErrors).map(error => <li key={error}>{error}</li>)}
+                </ul>
+            )}
             <div className="form-actions">
                 <button>Save Expense</button>
                 <Link to="..">Cancel</Link>
