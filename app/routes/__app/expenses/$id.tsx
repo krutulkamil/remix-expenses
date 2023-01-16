@@ -26,7 +26,7 @@ const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
 export const action: ActionFunction = async ({
                                                  params,
                                                  request
-                                             }): Promise<Response | IExpenseValidationError | undefined> => {
+                                             }): Promise<Response | IExpenseValidationError | { deletedId: string } | undefined> => {
     const expenseId: string = params.id!;
 
     if (request.method === "PATCH") {
@@ -43,7 +43,7 @@ export const action: ActionFunction = async ({
         return redirect("/expenses");
     } else if (request.method === "DELETE") {
         await deleteExpense(expenseId);
-        return redirect("/expenses");
+        return { deletedId: expenseId };
     }
 };
 
