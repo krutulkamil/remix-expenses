@@ -1,7 +1,7 @@
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
-import type { MetaFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 
 const AddExpensesPage: FunctionComponent = (): JSX.Element => {
@@ -16,6 +16,10 @@ const AddExpensesPage: FunctionComponent = (): JSX.Element => {
             <ExpenseForm />
         </Modal>
     );
+};
+
+export const action: ActionFunction = () => {
+
 };
 
 export const meta: MetaFunction = () => ({

@@ -9,6 +9,7 @@
     "sass": "sass --watch app/scss/main.scss app/styles/main.css"
   },
   "dependencies": {
+    "@prisma/client": "^4.8.1",
     "@remix-run/node": "^1.10.1",
     "@remix-run/react": "^1.10.1",
     "@remix-run/serve": "^1.10.1",
