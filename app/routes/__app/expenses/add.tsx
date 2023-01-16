@@ -6,7 +6,8 @@ import { addExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
-import type { IExpense, IExpenseValidationError } from "~/types/expense";
+import type { Expense as IExpense } from "@prisma/client";
+import type { IExpenseValidationError } from "~/types/expense";
 
 const AddExpensesPage: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();

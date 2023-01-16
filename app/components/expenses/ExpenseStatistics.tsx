@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { calculateSummaryStatistics } from "~/services/calculateSummaryStatistics";
 import type { FunctionComponent } from "react";
-import type { IExpense } from "~/types/expense";
+import type { Expense as IExpense } from "@prisma/client";
 
 interface ExpenseStatisticsProps {
     expenses: IExpense[];

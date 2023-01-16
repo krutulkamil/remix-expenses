@@ -1,6 +1,6 @@
 import ExpenseListItem from "./ExpenseListItem";
 import type { FunctionComponent } from "react";
-import type { IExpense } from "~/types/expense";
+import type { Expense as IExpense } from "@prisma/client";
 
 interface ExpenseListProps {
     expenses: IExpense[];

@@ -1,4 +1,5 @@
-import type { IExpense, IExpenseValidationError } from "~/types/expense";
+import type { Expense as IExpense } from "@prisma/client";
+import type { IExpenseValidationError } from "~/types/expense";
 
 const isValidTitle = (value: string): boolean => {
     if (value) {

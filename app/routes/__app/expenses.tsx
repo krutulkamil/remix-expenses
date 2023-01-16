@@ -1,11 +1,14 @@
-import { Link, Outlet } from "@remix-run/react";
-import { FaPlus, FaDownload } from "react-icons/fa";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { FaDownload, FaPlus } from "react-icons/fa";
 import ExpenseList from "~/components/expenses/ExpenseList";
-import { DUMMY_EXPENSES } from "~/routes/__app/expenses.analysis";
-import type { MetaFunction } from "@remix-run/node";
+import { getExpenses } from "~/data/expenses.server";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
+import type { Expense as IExpense } from "@prisma/client";
 
 const ExpensesLayout: FunctionComponent = (): JSX.Element => {
+    const expenses: IExpense[] = useLoaderData<typeof loader>();
+
     return (
         <>
             <Outlet />
@@ -20,10 +23,14 @@ const ExpensesLayout: FunctionComponent = (): JSX.Element => {
                         <span>Load Raw Data</span>
                     </a>
                 </section>
-                <ExpenseList expenses={DUMMY_EXPENSES} />
+                <ExpenseList expenses={expenses} />
             </main>
         </>
     );
+};
+
+export const loader: LoaderFunction = async () => {
+    return await getExpenses();
 };
 
 export const meta: MetaFunction = () => ({

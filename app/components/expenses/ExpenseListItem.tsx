@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import type { FunctionComponent } from "react";
-import type { IExpense } from "~/types/expense";
+import type { Expense as IExpense } from "@prisma/client";
 
 interface ExpenseListItemProps {
     id: IExpense["id"];

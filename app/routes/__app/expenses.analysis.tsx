@@ -1,37 +1,25 @@
 import ExpenseStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
-import type { IExpense } from "~/types/expense";
+import { getExpenses } from "~/data/expenses.server";
+import { useLoaderData } from "@remix-run/react";
 import type { MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
-
-export const DUMMY_EXPENSES: IExpense[] = [
-    {
-        id: "e1",
-        title: "example expense",
-        amount: 400,
-        date: new Date().toISOString(),
-    },
-    {
-        id: "e2",
-        title: "example expense 2",
-        amount: 100,
-        date: (new Date().getMonth() + 2).toString(),
-    },
-    {
-        id: "e3",
-        title: "example expense 3",
-        amount: 140,
-        date: (new Date().getMonth() + 3).toString(),
-    }
-];
+import type { Expense as IExpense } from "@prisma/client";
+import type { LoaderFunction } from "@remix-run/node";
 
 const ExpensesAnalysisPage: FunctionComponent = (): JSX.Element => {
+    const expenses: IExpense[] = useLoaderData<typeof loader>();
+
     return (
         <main>
-            <Chart expenses={DUMMY_EXPENSES} />
-            <ExpenseStatistics expenses={DUMMY_EXPENSES} />
+            <Chart expenses={expenses} />
+            <ExpenseStatistics expenses={expenses} />
         </main>
     );
+};
+
+export const loader: LoaderFunction = async () => {
+    return await getExpenses();
 };
 
 export const meta: MetaFunction = () => ({

@@ -1,4 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
-import { DUMMY_EXPENSES } from "~/routes/__app/expenses.analysis";
+import { getExpenses } from "~/data/expenses.server";
 
-export const loader: LoaderFunction = () => DUMMY_EXPENSES;
+export const loader: LoaderFunction = async () => {
+    return await getExpenses();
+};
