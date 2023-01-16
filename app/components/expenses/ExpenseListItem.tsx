@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, Form } from "@remix-run/react";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
 
@@ -9,8 +9,6 @@ interface ExpenseListItemProps {
 }
 
 const ExpenseListItem: FunctionComponent<ExpenseListItemProps> = ({ id, title, amount }): JSX.Element => {
-    const deleteExpenseItemHandler = () => {};
-
     return (
         <article className="expense-item">
             <div>
@@ -18,7 +16,9 @@ const ExpenseListItem: FunctionComponent<ExpenseListItemProps> = ({ id, title, a
                 <p className="expense-amount">${amount.toFixed(2)}</p>
             </div>
             <menu className="expense-actions">
-                <button onClick={deleteExpenseItemHandler}>Delete</button>
+                <Form method="delete" action={`/expenses/${id}`}>
+                    <button>Delete</button>
+                </Form>
                 <Link to={id}>Edit</Link>
             </menu>
         </article>
