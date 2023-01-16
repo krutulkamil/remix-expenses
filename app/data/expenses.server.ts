@@ -24,3 +24,12 @@ export const getExpenses = async (): Promise<PrismaPromise<IExpense[]>> => {
         throw error;
     }
 };
+
+export const getExpense = async (id: string): Promise<PrismaPromise<IExpense | null>> => {
+    try {
+        return await prisma.expense.findFirst({ where: { id } });
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};

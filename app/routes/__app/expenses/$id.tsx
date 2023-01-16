@@ -1,8 +1,10 @@
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
+import { getExpense } from "~/data/expenses.server";
 import type { MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
+import type { LoaderFunction } from "@remix-run/node";
 
 const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();
@@ -16,6 +18,11 @@ const UpdateExpensesPage: FunctionComponent = (): JSX.Element => {
             <ExpenseForm />
         </Modal>
     );
+};
+
+export const loader: LoaderFunction = async ({ params }) => {
+    const expenseId: string = params.id!;
+    return await getExpense(expenseId);
 };
 
 export const meta: MetaFunction = () => ({
