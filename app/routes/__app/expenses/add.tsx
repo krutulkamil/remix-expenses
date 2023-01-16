@@ -1,14 +1,17 @@
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
+import { redirect } from "@remix-run/node";
+import { addExpense } from "~/data/expenses.server";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
+import type { IExpense } from "~/types/expense";
 
 const AddExpensesPage: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();
 
     const closeHandler = () => {
-        navigate('..')
+        navigate("..");
     };
 
     return (
@@ -18,8 +21,12 @@ const AddExpensesPage: FunctionComponent = (): JSX.Element => {
     );
 };
 
-export const action: ActionFunction = () => {
+export const action: ActionFunction = async ({ request }): Promise<Response> => {
+    const formData: FormData = await request.formData();
+    const expenseData = Object.fromEntries(formData) as unknown as IExpense;
 
+    await addExpense(expenseData);
+    return redirect('/expenses');
 };
 
 export const meta: MetaFunction = () => ({
