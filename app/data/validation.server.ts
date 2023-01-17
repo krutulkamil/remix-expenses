@@ -1,6 +1,6 @@
-import type { Expense as IExpense } from "@prisma/client";
+import type { Expense as IExpense, User as IUser } from "@prisma/client";
 import type { IExpenseValidationError } from "~/types/expense";
-import type { IUser, IUserValidationError } from "~/types/user";
+import type { IUserValidationError } from "~/types/user";
 
 const isValidTitle = (value: string): boolean => {
     if (value) {
@@ -22,7 +22,7 @@ const isValidDate = (value: string): boolean => {
 };
 
 const isValidEmail = (value: string): boolean => {
-    let isRegexValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+    let isRegexValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
     return !!(value && isRegexValid);
 };
@@ -38,13 +38,13 @@ export const validateUserInput = (input: IUser): void => {
     let validationErrors: IUserValidationError = {};
 
     if (!isValidEmail(input.email)) {
-        validationErrors.email = "Invalid email address."
+        validationErrors.email = "Invalid email address.";
     }
 
     if (!isValidPassword(input.password)) {
-        validationErrors.password = "Invalid password. Must be at least 8 characters long and less than 30."
+        validationErrors.password = "Invalid password. Must be at least 8 characters long and less than 30.";
     }
-}
+};
 
 export const validateExpenseInput = (input: IExpense): void => {
     let validationErrors: IExpenseValidationError = {};
@@ -58,7 +58,7 @@ export const validateExpenseInput = (input: IExpense): void => {
     }
 
     if (!isValidDate(String(input.date))) {
-        validationErrors.date = 'Invalid date. Must be a date before today.'
+        validationErrors.date = "Invalid date. Must be a date before today.";
     }
 
     if (Object.keys(validationErrors).length > 0) {

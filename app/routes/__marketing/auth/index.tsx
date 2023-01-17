@@ -2,7 +2,8 @@ import AuthForm from "~/components/auth/AuthForm";
 import { validateUserInput } from "~/data/validation.server";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
-import type { IUser, IUserValidationError } from "~/types/user";
+import type { User as IUser } from "@prisma/client";
+import type { IUserValidationError } from "~/types/user";
 
 const AuthPage: FunctionComponent = (): JSX.Element => {
     return (
