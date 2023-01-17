@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import { FaArrowRight, FaDollarSign, FaChartBar } from "react-icons/fa";
-import type { MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 
 const Index: FunctionComponent = (): JSX.Element => {
@@ -44,11 +43,5 @@ const Index: FunctionComponent = (): JSX.Element => {
         </main>
     );
 };
-
-export const meta: MetaFunction = () => ({
-    charset: "utf-8",
-    title: "Remix Expenses",
-    viewport: "width=device-width,initial-scale=1"
-});
 
 export default Index;

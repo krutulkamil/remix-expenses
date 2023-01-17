@@ -1,29 +1,28 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
+    Link,
     Links,
     LiveReload,
     Meta,
     Outlet,
     Scripts,
-    ScrollRestoration
+    ScrollRestoration, useCatch
 } from "@remix-run/react";
+import Error from "~/components/util/Error";
 import styles from "./styles/main.css";
-import type { FunctionComponent } from "react";
+import type { FunctionComponent, ReactNode } from "react";
+import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix-run/node";
+import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 
-export const meta: MetaFunction = () => ({
-    charset: "utf-8",
-    title: "Remix Expenses",
-    viewport: "width=device-width,initial-scale=1"
-});
+interface DocumentProps {
+    title: string;
+    children: ReactNode;
+}
 
-export const links: LinksFunction = () => {
-    return [{ rel: "stylesheet", href: styles }];
-};
-
-const App: FunctionComponent = (): JSX.Element => {
+const Document: FunctionComponent<DocumentProps> = ({ title, children }): JSX.Element => {
     return (
         <html lang="en">
         <head>
+            <title>{title}</title>
             <Meta />
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -32,13 +31,58 @@ const App: FunctionComponent = (): JSX.Element => {
             <Links />
         </head>
         <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
         </body>
         </html>
     );
+};
+
+const App: FunctionComponent = (): JSX.Element => {
+    return (
+        <Document title="Remix Expenses">
+            <Outlet />
+        </Document>
+    );
+};
+
+export const CatchBoundary: CatchBoundaryComponent = (): JSX.Element => {
+    const caughtResponse = useCatch();
+
+    return (
+        <Document title={caughtResponse.statusText}>
+            <main>
+                <Error title={caughtResponse.statusText}>
+                    <p>{caughtResponse.data?.message || "Something went wrong. Please try again later."}</p>
+                    <p>Back to <Link to="/">safety</Link>.</p>
+                </Error>
+            </main>
+        </Document>
+    );
+};
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }): JSX.Element => {
+    return (
+        <Document title="An error occurred.">
+            <main>
+                <Error title="An error occurred.">
+                    <p>{error.message || "Something went wrong. Please try again later."}</p>
+                    <p>Back to <Link to="/">safety</Link>.</p>
+                </Error>
+            </main>
+        </Document>
+    );
+};
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1"
+});
+
+export const links: LinksFunction = () => {
+    return [{ rel: "stylesheet", href: styles }];
 };
 
 export default App;
