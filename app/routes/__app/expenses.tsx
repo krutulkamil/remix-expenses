@@ -8,6 +8,7 @@ import type { Expense as IExpense } from "@prisma/client";
 
 const ExpensesLayout: FunctionComponent = (): JSX.Element => {
     const expenses: IExpense[] = useLoaderData<typeof loader>();
+    const hasExpenses: boolean = expenses && expenses.length > 0;
 
     return (
         <>
@@ -23,7 +24,13 @@ const ExpensesLayout: FunctionComponent = (): JSX.Element => {
                         <span>Load Raw Data</span>
                     </a>
                 </section>
-                <ExpenseList expenses={expenses} />
+                {hasExpenses && <ExpenseList expenses={expenses} />}
+                {!hasExpenses && (
+                    <section id="no-expenses">
+                        <h1>No expenses found.</h1>
+                        <p>Start <Link to="add">adding some</Link> today.</p>
+                    </section>
+                )}
             </main>
         </>
     );
