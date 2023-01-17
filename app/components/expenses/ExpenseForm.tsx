@@ -24,6 +24,12 @@ const ExpenseForm: FunctionComponent = (): JSX.Element => {
     const navigation: Navigation = useNavigation();
     const validationErrors: IExpenseValidationError | undefined = useActionData();
 
+    if (params.id && !expenseData) {
+        return (
+            <p>Invalid expense id.</p>
+        );
+    }
+
     const defaultValues = expenseData ? {
         title: expenseData.title,
         amount: expenseData.amount,
