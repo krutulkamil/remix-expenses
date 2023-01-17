@@ -1,6 +1,8 @@
 import AuthForm from "~/components/auth/AuthForm";
+import { validateUserInput } from "~/data/validation.server";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
+import type { IUser, IUserValidationError } from "~/types/user";
 
 const AuthPage: FunctionComponent = (): JSX.Element => {
     return (
@@ -13,7 +15,13 @@ export const action: ActionFunction = async ({ request }) => {
     const authMode: string = searchParams.get("mode") || "login";
 
     const formData: FormData = await request.formData();
-    const credentials = Object.fromEntries(formData);
+    const credentials = Object.fromEntries(formData) as unknown as IUser;
+
+    try {
+        validateUserInput(credentials);
+    } catch (error) {
+        return error as IUserValidationError;
+    }
 
     if (authMode === "login") {
         //     login logic

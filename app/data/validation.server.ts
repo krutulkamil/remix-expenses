@@ -1,5 +1,6 @@
 import type { Expense as IExpense } from "@prisma/client";
 import type { IExpenseValidationError } from "~/types/expense";
+import type { IUser, IUserValidationError } from "~/types/user";
 
 const isValidTitle = (value: string): boolean => {
     if (value) {
@@ -20,10 +21,35 @@ const isValidDate = (value: string): boolean => {
     return false;
 };
 
-export const validateExpenseInput = (input: IExpense) => {
+const isValidEmail = (value: string): boolean => {
+    let isRegexValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+
+    return !!(value && isRegexValid);
+};
+
+const isValidPassword = (value: string): boolean => {
+    if (value) {
+        return value.trim().length > 7 && value.trim().length <= 30;
+    }
+    return false;
+};
+
+export const validateUserInput = (input: IUser): void => {
+    let validationErrors: IUserValidationError = {};
+
+    if (!isValidEmail(input.email)) {
+        validationErrors.email = "Invalid email address."
+    }
+
+    if (!isValidPassword(input.password)) {
+        validationErrors.password = "Invalid password. Must be at least 8 characters long and less than 30."
+    }
+}
+
+export const validateExpenseInput = (input: IExpense): void => {
     let validationErrors: IExpenseValidationError = {};
 
-    if (!isValidTitle(String(input.title))) {
+    if (!isValidTitle(input.title)) {
         validationErrors.title = "Invalid expense title. Must be at most 30 characters long.";
     }
 
