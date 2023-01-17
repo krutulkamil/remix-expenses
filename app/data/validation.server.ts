@@ -34,7 +34,7 @@ const isValidPassword = (value: string): boolean => {
     return false;
 };
 
-export const validateUserInput = (input: IUser): void => {
+export const validateCredentials = (input: IUser): void => {
     let validationErrors: IUserValidationError = {};
 
     if (!isValidEmail(input.email)) {
@@ -43,6 +43,10 @@ export const validateUserInput = (input: IUser): void => {
 
     if (!isValidPassword(input.password)) {
         validationErrors.password = "Invalid password. Must be at least 8 characters long and less than 30.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+        throw validationErrors;
     }
 };
 

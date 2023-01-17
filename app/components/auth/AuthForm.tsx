@@ -1,11 +1,13 @@
-import { Form, Link, useSearchParams, useNavigation } from "@remix-run/react";
+import { Form, Link, useSearchParams, useNavigation, useActionData } from "@remix-run/react";
 import { FaLock, FaUserPlus } from "react-icons/fa";
 import type { FunctionComponent } from "react";
 import type { Navigation } from "@remix-run/router";
+import type { IUserValidationError } from "~/types/user";
 
 const AuthForm: FunctionComponent = (): JSX.Element => {
     const [searchParams] = useSearchParams();
     const navigation: Navigation = useNavigation();
+    const validationErrors: IUserValidationError | undefined = useActionData();
 
     const authMode = searchParams.get("mode") || "login";
 
@@ -27,6 +29,11 @@ const AuthForm: FunctionComponent = (): JSX.Element => {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" name="password" minLength={7} maxLength={30} />
             </p>
+            {validationErrors && (
+                <ul>
+                    {Object.values(validationErrors).map((error: string) => <li key={error}>{error}</li>)}
+                </ul>
+            )}
             <div className="form-actions">
                 <button disabled={isSubmitting}>{isSubmitting ? "Authenticating..." : submitButtonCaption}</button>
                 <Link to={authMode === "login" ? "?mode=signup" : "?mode=login"}>{toggleButtonCaption}</Link>

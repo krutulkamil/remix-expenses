@@ -1,5 +1,5 @@
 import AuthForm from "~/components/auth/AuthForm";
-import { validateUserInput } from "~/data/validation.server";
+import { validateCredentials } from "~/data/validation.server";
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { User as IUser } from "@prisma/client";
@@ -19,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
     const credentials = Object.fromEntries(formData) as unknown as IUser;
 
     try {
-        validateUserInput(credentials);
+        validateCredentials(credentials);
     } catch (error) {
         return error as IUserValidationError;
     }
