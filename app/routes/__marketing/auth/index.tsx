@@ -1,9 +1,12 @@
+import { redirect } from "@remix-run/node";
 import AuthForm from "~/components/auth/AuthForm";
 import { validateCredentials } from "~/data/validation.server";
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import { signup } from "~/data/auth.sever";
+import type { ActionFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { User as IUser } from "@prisma/client";
 import type { IUserValidationError } from "~/types/user";
+import type { ResponseError } from "~/data/auth.sever";
 
 const AuthPage: FunctionComponent = (): JSX.Element => {
     return (
@@ -24,16 +27,18 @@ export const action: ActionFunction = async ({ request }) => {
         return error as IUserValidationError;
     }
 
-    if (authMode === "login") {
-        //     login logic
-    } else {
-        //     signup logic
+    try {
+        if (authMode === "login") {
+            //     login logic
+        } else {
+            await signup(credentials);
+            return redirect("/expenses");
+        }
+    } catch (error) {
+        if ((error as ResponseError).status === 422) {
+            return { credentials: (error as ResponseError).message };
+        }
     }
 };
-export const meta: MetaFunction = () => ({
-    charset: "utf-8",
-    title: "Auth | Remix Expenses",
-    viewport: "width=device-width,initial-scale=1"
-});
 
 export default AuthPage;

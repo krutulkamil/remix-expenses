@@ -4,7 +4,7 @@ import Modal from "~/components/util/Modal";
 import { redirect } from "@remix-run/node";
 import { addExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
 import type { IExpenseValidationError } from "~/types/expense";
@@ -36,11 +36,5 @@ export const action: ActionFunction = async ({ request }): Promise<Response | IE
     await addExpense(expenseData);
     return redirect('/expenses');
 };
-
-export const meta: MetaFunction = () => ({
-    charset: "utf-8",
-    title: "Add Expense | Remix Expenses",
-    viewport: "width=device-width,initial-scale=1"
-});
 
 export default AddExpensesPage;
