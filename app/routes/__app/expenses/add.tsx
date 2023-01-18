@@ -5,7 +5,7 @@ import { redirect } from "@remix-run/node";
 import { addExpense } from "~/data/expenses.server";
 import { requireUserSession } from "~/data/auth.sever";
 import { validateExpenseInput } from "~/data/validation.server";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
 import type { IExpenseValidationError } from "~/types/expense";
@@ -39,5 +39,11 @@ export const action: ActionFunction = async ({ request }): Promise<Response | IE
     await addExpense(expenseData, userId);
     return redirect('/expenses');
 };
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
+    title: "Add New Expense | Remix Expenses"
+});
 
 export default AddExpensesPage;

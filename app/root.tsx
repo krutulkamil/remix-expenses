@@ -14,7 +14,7 @@ import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix
 import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 
 interface DocumentProps {
-    title: string;
+    title?: string;
     children: ReactNode;
 }
 
@@ -22,7 +22,7 @@ const Document: FunctionComponent<DocumentProps> = ({ title, children }): JSX.El
     return (
         <html lang="en">
         <head>
-            <title>{title}</title>
+            {title && <title>{title}</title>}
             <Meta />
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -42,7 +42,7 @@ const Document: FunctionComponent<DocumentProps> = ({ title, children }): JSX.El
 
 const App: FunctionComponent = (): JSX.Element => {
     return (
-        <Document title="Remix Expenses">
+        <Document>
             <Outlet />
         </Document>
     );
@@ -78,7 +78,9 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }): JSX.Element =>
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
-    viewport: "width=device-width,initial-scale=1"
+    viewport: "width=device-width,initial-scale=1",
+    title: "Remix Expenses",
+    description: "Manage your expenses with ease."
 });
 
 export const links: LinksFunction = () => {

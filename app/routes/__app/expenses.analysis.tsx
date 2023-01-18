@@ -7,7 +7,7 @@ import { getExpenses } from "~/data/expenses.server";
 import { requireUserSession } from "~/data/auth.sever";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 
 const ExpensesAnalysisPage: FunctionComponent = (): JSX.Element => {
@@ -47,5 +47,11 @@ export const CatchBoundary: CatchBoundaryComponent = (): JSX.Element => {
         </main>
     );
 };
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
+    title: "Expense Analysis | Remix Expenses"
+});
 
 export default ExpensesAnalysisPage;

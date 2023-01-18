@@ -5,7 +5,7 @@ import Modal from "~/components/util/Modal";
 import { updateExpense, deleteExpense } from "~/data/expenses.server";
 import { validateExpenseInput } from "~/data/validation.server";
 import type { Expense as IExpense } from "@prisma/client";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { IExpenseValidationError } from "~/types/expense";
 
@@ -45,6 +45,16 @@ export const action: ActionFunction = async ({
         await deleteExpense(expenseId);
         return { deletedId: expenseId };
     }
+};
+
+export const meta: MetaFunction = ({ params, parentsData }) => {
+    const expense = parentsData["routes/__app/expenses"].find((expense: IExpense) => expense.id === params.id);
+
+    return {
+        charset: "utf-8",
+        viewport: "width=device-width,initial-scale=1",
+        title: `${expense.title} | Remix Expenses`
+    };
 };
 
 export default UpdateExpensesPage;

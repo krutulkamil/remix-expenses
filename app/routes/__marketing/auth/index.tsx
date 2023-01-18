@@ -1,7 +1,7 @@
 import AuthForm from "~/components/auth/AuthForm";
 import { validateCredentials } from "~/data/validation.server";
 import { login, signup } from "~/data/auth.sever";
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { User as IUser } from "@prisma/client";
 import type { IUserValidationError } from "~/types/user";
@@ -36,5 +36,11 @@ export const action: ActionFunction = async ({ request }) => {
         return { credentials: (error as ResponseError).message}
     }
 };
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
+    title: "Auth | Remix Expenses"
+});
 
 export default AuthPage;

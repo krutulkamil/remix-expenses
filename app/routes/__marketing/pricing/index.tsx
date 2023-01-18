@@ -2,6 +2,7 @@ import PricingPlan from "~/components/marketing/PricingPlan";
 import { FaTrophy, FaHandshake } from "react-icons/fa";
 import type { IPricingPlan } from "~/types/pricingPlan";
 import type { FunctionComponent } from "react";
+import type { MetaFunction } from "@remix-run/node";
 
 export const PRICING_PLANS: IPricingPlan[] = [
     {
@@ -39,5 +40,12 @@ const PricingPage: FunctionComponent = (): JSX.Element => {
         </main>
     );
 };
+
+export const meta: MetaFunction = () => ({
+    charset: "utf-8",
+    viewport: "width=device-width,initial-scale=1",
+    title: "Pricing | Remix Expenses",
+    description: "See our pricing plans."
+});
 
 export default PricingPage;
