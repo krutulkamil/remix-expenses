@@ -1,12 +1,11 @@
-import { redirect } from "@remix-run/node";
 import AuthForm from "~/components/auth/AuthForm";
 import { validateCredentials } from "~/data/validation.server";
-import { signup } from "~/data/auth.sever";
+import { login, signup } from "~/data/auth.sever";
 import type { ActionFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { User as IUser } from "@prisma/client";
 import type { IUserValidationError } from "~/types/user";
-import type { ResponseError } from "~/data/auth.sever";
+import type { ResponseError } from "~/services/throwErrorResponse";
 
 const AuthPage: FunctionComponent = (): JSX.Element => {
     return (
@@ -29,15 +28,12 @@ export const action: ActionFunction = async ({ request }) => {
 
     try {
         if (authMode === "login") {
-            //     login logic
+            return await login(credentials);
         } else {
-            await signup(credentials);
-            return redirect("/expenses");
+            return await signup(credentials);
         }
     } catch (error) {
-        if ((error as ResponseError).status === 422) {
-            return { credentials: (error as ResponseError).message };
-        }
+        return { credentials: (error as ResponseError).message}
     }
 };
 

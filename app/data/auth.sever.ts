@@ -1,28 +1,64 @@
-import { hash } from "bcryptjs";
+import { hash, compare } from "bcryptjs";
+import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { prisma } from "~/data/database.server";
-import type { User as IUser, PrismaPromise } from "@prisma/client";
+import { throwErrorResponse } from "~/services/throwErrorResponse";
+import type { User as IUser } from "@prisma/client";
+import type { SessionStorage } from "@remix-run/node";
 
-export interface ResponseError extends Error {
-    status?: number;
-}
+const SESSION_SECRET: string = process.env.SESSION_SECRET!;
+
+const sessionStorage: SessionStorage = createCookieSessionStorage({
+    cookie: {
+        secure: process.env.NODE_ENV === "production",
+        secrets: [SESSION_SECRET],
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60, // 1 day
+        httpOnly: true
+    }
+});
+
+const createUserSession = async (userId: IUser["id"], redirectPath: string): Promise<Response> => {
+    const session = await sessionStorage.getSession();
+    session.set("userId", userId);
+
+    return redirect(redirectPath, {
+        headers: {
+            "Set-Cookie": await sessionStorage.commitSession(session)
+        }
+    });
+};
 
 export const signup = async ({
                                  email,
                                  password
-                             }: { email: IUser["email"], password: IUser["password"] }): Promise<PrismaPromise<IUser>> => {
-    const existingUser = await prisma.user.findFirst({ where: { email } });
+                             }: { email: IUser["email"], password: IUser["password"] }): Promise<Response> => {
+    const existingUser: IUser | null = await prisma.user.findFirst({ where: { email } });
 
     if (existingUser) {
-        const error: ResponseError = new Error("A user with the provided email address exists already.");
-        error.status = 422;
-        throw error;
+        throwErrorResponse("A user with the provided email address exists already.", 422);
     }
 
     const passwordHash: string = await hash(password, 12);
 
-    try {
-        return await prisma.user.create({ data: { email, password: passwordHash } });
-    } catch (error) {
-        throw new Error("Failed to signup.");
+    const user = await prisma.user.create({ data: { email, password: passwordHash } });
+    return await createUserSession(user.id, '/expenses');
+};
+
+export const login = async ({
+                                email,
+                                password
+                            }: { email: IUser["email"], password: IUser["password"] }): Promise<Response | undefined> => {
+    const existingUser: IUser | null = await prisma.user.findFirst({ where: { email } });
+
+    if (!existingUser) {
+        throwErrorResponse("Could not log you in, please check the provided credentials.", 401);
+    } else {
+        const passwordCorrect: boolean = await compare(password, existingUser.password);
+
+        if (!passwordCorrect) {
+            throwErrorResponse("Could not log you in, please check the provided credentials.", 401);
+        }
+
+        return await createUserSession(existingUser.id, '/expenses');
     }
 };
