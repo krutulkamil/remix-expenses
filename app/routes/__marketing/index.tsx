@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { FaArrowRight, FaDollarSign, FaChartBar } from "react-icons/fa";
 import type { FunctionComponent } from "react";
+import type { HeadersFunction } from "@remix-run/node";
 
 const Index: FunctionComponent = (): JSX.Element => {
     return (
@@ -42,6 +43,12 @@ const Index: FunctionComponent = (): JSX.Element => {
             </section>
         </main>
     );
+};
+
+export const headers: HeadersFunction = ({ parentHeaders }) => {
+    return {
+        "Cache-Control": parentHeaders.get("Cache-Control")!
+    };
 };
 
 export default Index;

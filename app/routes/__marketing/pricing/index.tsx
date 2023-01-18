@@ -2,7 +2,7 @@ import PricingPlan from "~/components/marketing/PricingPlan";
 import { FaTrophy, FaHandshake } from "react-icons/fa";
 import type { IPricingPlan } from "~/types/pricingPlan";
 import type { FunctionComponent } from "react";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction, HeadersFunction } from "@remix-run/node";
 
 export const PRICING_PLANS: IPricingPlan[] = [
     {
@@ -47,5 +47,11 @@ export const meta: MetaFunction = () => ({
     title: "Pricing | Remix Expenses",
     description: "See our pricing plans."
 });
+
+export const headers: HeadersFunction = ({ parentHeaders }) => {
+    return {
+        "Cache-Control": parentHeaders.get("Cache-Control")!
+    };
+};
 
 export default PricingPage;
