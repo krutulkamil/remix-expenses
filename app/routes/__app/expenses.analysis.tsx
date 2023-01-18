@@ -4,6 +4,7 @@ import ExpenseStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
 import Error from "~/components/util/Error";
 import { getExpenses } from "~/data/expenses.server";
+import { requireUserSession } from "~/data/auth.sever";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
@@ -20,7 +21,9 @@ const ExpensesAnalysisPage: FunctionComponent = (): JSX.Element => {
     );
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+    await requireUserSession(request);
+
     const expenses: IExpense[] = await getExpenses();
 
     if (!expenses || expenses.length === 0) {
