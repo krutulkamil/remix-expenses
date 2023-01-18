@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react";
+import { Form, NavLink } from "@remix-run/react";
 import Logo from "../util/Logo";
 import type { FunctionComponent } from "react";
 
@@ -19,7 +19,9 @@ const ExpensesHeader: FunctionComponent = (): JSX.Element => {
                 </ul>
             </nav>
             <nav id="cta-nav">
-                <button className="cta">Logout</button>
+                <Form method="post" action="/logout">
+                    <button className="cta">Logout</button>
+                </Form>
             </nav>
         </header>
     );

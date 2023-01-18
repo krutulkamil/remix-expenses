@@ -38,9 +38,9 @@ const ExpensesLayout: FunctionComponent = (): JSX.Element => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-    await requireUserSession(request);
+    const userId = await requireUserSession(request);
 
-    return await getExpenses();
+    return await getExpenses(userId);
 };
 
 export default ExpensesLayout;

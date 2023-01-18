@@ -22,9 +22,9 @@ const ExpensesAnalysisPage: FunctionComponent = (): JSX.Element => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-    await requireUserSession(request);
+    const userId = await requireUserSession(request);
 
-    const expenses: IExpense[] = await getExpenses();
+    const expenses: IExpense[] = await getExpenses(userId);
 
     if (!expenses || expenses.length === 0) {
         throw json({ message: "Could not load expenses for the requested analysis." }, {

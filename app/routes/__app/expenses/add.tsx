@@ -3,6 +3,7 @@ import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
 import { redirect } from "@remix-run/node";
 import { addExpense } from "~/data/expenses.server";
+import { requireUserSession } from "~/data/auth.sever";
 import { validateExpenseInput } from "~/data/validation.server";
 import type { ActionFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
@@ -24,6 +25,8 @@ const AddExpensesPage: FunctionComponent = (): JSX.Element => {
 };
 
 export const action: ActionFunction = async ({ request }): Promise<Response | IExpenseValidationError> => {
+    const userId = await requireUserSession(request);
+
     const formData: FormData = await request.formData();
     const expenseData = Object.fromEntries(formData) as unknown as IExpense;
 
@@ -33,7 +36,7 @@ export const action: ActionFunction = async ({ request }): Promise<Response | IE
         return error as IExpenseValidationError;
     }
 
-    await addExpense(expenseData);
+    await addExpense(expenseData, userId);
     return redirect('/expenses');
 };
 

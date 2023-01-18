@@ -1,13 +1,14 @@
 import { prisma } from "~/data/database.server";
-import type { Expense as IExpense, PrismaPromise } from "@prisma/client";
+import type { Expense as IExpense, User as IUser, PrismaPromise } from "@prisma/client";
 
-export const addExpense = async (expenseData: IExpense): Promise<PrismaPromise<IExpense>> => {
+export const addExpense = async (expenseData: IExpense, userId: IUser["id"]): Promise<PrismaPromise<IExpense>> => {
     try {
         return await prisma.expense.create({
             data: {
                 title: expenseData.title,
                 amount: +expenseData.amount,
                 date: new Date(expenseData.date),
+                User: { connect: { id: userId } }
             }
         });
     } catch (error) {
@@ -15,9 +16,16 @@ export const addExpense = async (expenseData: IExpense): Promise<PrismaPromise<I
     }
 };
 
-export const getExpenses = async (): Promise<PrismaPromise<IExpense[]>> => {
+export const getExpenses = async (userId: IUser["id"]): Promise<PrismaPromise<IExpense[]>> => {
+    if (!userId) {
+        throw new Error("Failed to get expenses.");
+    }
+
     try {
-        return await prisma.expense.findMany({ orderBy: { date: "desc" } });
+        return await prisma.expense.findMany({
+            where: { userId },
+            orderBy: { date: "desc" }
+        });
     } catch (error) {
         throw new Error("Failed to get expenses.");
     }

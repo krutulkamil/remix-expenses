@@ -3,7 +3,7 @@ import { getExpenses } from "~/data/expenses.server";
 import { requireUserSession } from "~/data/auth.sever";
 
 export const loader: LoaderFunction = async ({ request }) => {
-    await requireUserSession(request);
+    const userId = await requireUserSession(request);
 
-    return await getExpenses();
+    return await getExpenses(userId);
 };
