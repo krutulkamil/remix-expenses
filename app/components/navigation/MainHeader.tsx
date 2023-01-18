@@ -4,7 +4,6 @@ import type { FunctionComponent } from "react";
 import type { loader } from "~/routes/__marketing";
 
 const MainHeader: FunctionComponent = (): JSX.Element => {
-
     const userId: string | null = useLoaderData<typeof loader>();
 
     return (

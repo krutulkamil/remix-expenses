@@ -2,6 +2,7 @@ import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { FaDownload, FaPlus } from "react-icons/fa";
 import ExpenseList from "~/components/expenses/ExpenseList";
 import { getExpenses } from "~/data/expenses.server";
+import { requireUserSession } from "~/data/auth.sever";
 import type { LoaderFunction } from "@remix-run/node";
 import type { FunctionComponent } from "react";
 import type { Expense as IExpense } from "@prisma/client";
@@ -36,7 +37,9 @@ const ExpensesLayout: FunctionComponent = (): JSX.Element => {
     );
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+    await requireUserSession(request);
+
     return await getExpenses();
 };
 

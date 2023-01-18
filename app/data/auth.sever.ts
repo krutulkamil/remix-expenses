@@ -45,9 +45,17 @@ export const destroyUserSession = async (request: Request): Promise<Response> =>
 
     return redirect("/", {
         headers: {
-            'Set-Cookie': await sessionStorage.destroySession(session)
+            "Set-Cookie": await sessionStorage.destroySession(session)
         }
     });
+};
+
+export const requireUserSession = async (request: Request) => {
+    const userId = await getUserFromSession(request);
+
+    if (!userId) {
+        throw redirect("/auth?mode=login");
+    }
 };
 
 export const signup = async ({
