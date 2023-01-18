@@ -7,7 +7,7 @@ export const addExpense = async (expenseData: IExpense): Promise<PrismaPromise<I
             data: {
                 title: expenseData.title,
                 amount: +expenseData.amount,
-                date: new Date(expenseData.date)
+                date: new Date(expenseData.date),
             }
         });
     } catch (error) {

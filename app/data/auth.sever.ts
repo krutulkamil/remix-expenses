@@ -28,6 +28,18 @@ const createUserSession = async (userId: IUser["id"], redirectPath: string): Pro
     });
 };
 
+export const getUserFromSession = async (request: Request): Promise<string | null> => {
+    const session = await sessionStorage.getSession(request.headers.get("Cookie"));
+
+    const userId: string = session.get("userId");
+
+    if (!userId) {
+        return null;
+    }
+
+    return userId;
+};
+
 export const signup = async ({
                                  email,
                                  password
@@ -41,7 +53,7 @@ export const signup = async ({
     const passwordHash: string = await hash(password, 12);
 
     const user = await prisma.user.create({ data: { email, password: passwordHash } });
-    return await createUserSession(user.id, '/expenses');
+    return await createUserSession(user.id, "/expenses");
 };
 
 export const login = async ({
@@ -59,6 +71,6 @@ export const login = async ({
             throwErrorResponse("Could not log you in, please check the provided credentials.", 401);
         }
 
-        return await createUserSession(existingUser.id, '/expenses');
+        return await createUserSession(existingUser.id, "/expenses");
     }
 };

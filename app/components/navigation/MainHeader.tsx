@@ -1,8 +1,12 @@
-import { Link, NavLink } from "@remix-run/react";
+import { Link, NavLink, useLoaderData } from "@remix-run/react";
 import Logo from "../util/Logo";
 import type { FunctionComponent } from "react";
+import type { loader } from "~/routes/__marketing";
 
 const MainHeader: FunctionComponent = (): JSX.Element => {
+
+    const userId: string | null = useLoaderData<typeof loader>();
+
     return (
         <header id="main-header">
             <Logo />
@@ -19,7 +23,14 @@ const MainHeader: FunctionComponent = (): JSX.Element => {
             <nav id="cta-nav">
                 <ul>
                     <li>
-                        <Link to="/auth" className="cta">Login</Link>
+                        {userId && (
+                            <form>
+                                <button className="cta-alt">Logout</button>
+                            </form>
+                        )}
+                        {!userId && (
+                            <Link to="/auth" className="cta">Login</Link>
+                        )}
                     </li>
                 </ul>
             </nav>
