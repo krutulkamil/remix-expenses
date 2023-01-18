@@ -1,4 +1,4 @@
-import { Link, NavLink, useLoaderData } from "@remix-run/react";
+import { Form, Link, NavLink, useLoaderData } from "@remix-run/react";
 import Logo from "../util/Logo";
 import type { FunctionComponent } from "react";
 import type { loader } from "~/routes/__marketing";
@@ -24,9 +24,9 @@ const MainHeader: FunctionComponent = (): JSX.Element => {
                 <ul>
                     <li>
                         {userId && (
-                            <form>
+                            <Form method="post" action="/logout" id="logout-form">
                                 <button className="cta-alt">Logout</button>
-                            </form>
+                            </Form>
                         )}
                         {!userId && (
                             <Link to="/auth" className="cta">Login</Link>

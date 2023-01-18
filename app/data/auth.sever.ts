@@ -40,6 +40,16 @@ export const getUserFromSession = async (request: Request): Promise<string | nul
     return userId;
 };
 
+export const destroyUserSession = async (request: Request): Promise<Response> => {
+    const session = await sessionStorage.getSession(request.headers.get("Cookie"));
+
+    return redirect("/", {
+        headers: {
+            'Set-Cookie': await sessionStorage.destroySession(session)
+        }
+    });
+};
+
 export const signup = async ({
                                  email,
                                  password
